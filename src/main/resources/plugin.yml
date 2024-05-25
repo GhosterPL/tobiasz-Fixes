@@ -3,7 +3,6 @@ author: Ghostero
 description: Beta Version
 version: 0.1.1 Test
 api-version: 1.16
-depend: [GHOSTERO-core-spigot]
 main: pl.ghostero.tobiasz.fixes.Main
 commands:
   labxd:

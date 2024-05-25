@@ -6,8 +6,9 @@ import pl.ghostero.tobiasz.fixes.command.WingsCommand;
 import pl.ghostero.tobiasz.fixes.listener.FixesListener;
 import pl.ghostero.tobiasz.fixes.listener.WingsListener;
 import pl.ghostero.tobiasz.fixes.objects.CosmeticStorage;
+import pl.ghostero.tobiasz.fixes.packets.PacketsManager;
+import pl.ghostero.tobiasz.fixes.tempstorage.TStorage;
 import pl.ghostero.tobiasz.fixes.wings.WingsManager;
-import pl.ghostero.tobiasz.sectors.command.WorkBenchCommand;
 
 @Getter
 public class Main extends JavaPlugin {
@@ -15,6 +16,8 @@ public class Main extends JavaPlugin {
 
     private CosmeticStorage cosmeticStorage;
     private WingsManager wingsManager;
+    private TStorage tStorage;
+    private PacketsManager packetsManager;
 
     @Override
     public void onEnable(){
@@ -23,5 +26,7 @@ public class Main extends JavaPlugin {
         cosmeticStorage = new CosmeticStorage();
         wingsManager = new WingsManager(this);
         getCommand("wings").setExecutor(new WingsCommand(this));
+        tStorage = new TStorage();
+        packetsManager = new PacketsManager();
     }
 }

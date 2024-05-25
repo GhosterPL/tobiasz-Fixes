@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.ghostero.tobiasz.fixes.Main;
 import pl.ghostero.tobiasz.fixes.objects.CosmeticUser;
+import pl.ghostero.tobiasz.fixes.tempstorage.Wing;
 
 public class WingsCommand implements CommandExecutor {
 
@@ -32,9 +33,11 @@ public class WingsCommand implements CommandExecutor {
 
         if(args.length == 1){
             if(args[0].equalsIgnoreCase("add")){
-                main.getWingsManager().prepareWingsForPlayer((Player) sender, 1005, 1005);
+                CosmeticUser cosmeticUser = main.getCosmeticStorage().getCosmeticUsers().get(sender.getName());
+                cosmeticUser.setWing(new Wing(1005, 1005));
+                main.getWingsManager().prepareWingsForPlayer((Player) sender);
             } else if (args[0].equalsIgnoreCase("debug")) {
-                main.getWingsManager().createWings((Player) sender);
+                //main.getWingsManager().createWings((Player) sender);
 
             }
         }
@@ -44,29 +47,17 @@ public class WingsCommand implements CommandExecutor {
                 final int idLeft = Integer.parseInt(args[1]);
                 final int idRight = Integer.parseInt(args[2]);
                 main.getWingsManager().destroyPlayerWings((Player) sender);
+                CosmeticUser cosmeticUser = main.getCosmeticStorage().getCosmeticUsers().get(sender.getName());
+                cosmeticUser.setWing(new Wing(idLeft, idRight));
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        main.getWingsManager().prepareWingsForPlayer((Player) sender, idLeft, idRight);
+                        main.getWingsManager().prepareWingsForPlayer((Player) sender);
                     }
                 }.runTaskLater(main, 1L);
 
             }
         }
-
-        if(args.length == 2){
-            if(args[0].equalsIgnoreCase("value")){
-                int value = Integer.parseInt(args[1]);
-                CosmeticUser cosmeticUser = main.getCosmeticStorage().getCosmeticUsers().get(sender.getName());
-                cosmeticUser.setTestValue1(value);
-            }
-            if(args[0].equalsIgnoreCase("value2")){
-                int value = Integer.parseInt(args[1]);
-                CosmeticUser cosmeticUser = main.getCosmeticStorage().getCosmeticUsers().get(sender.getName());
-                cosmeticUser.setTestValue2(value);
-            }
-        }
-
         return false;
     }
 }
